@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="km">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>ឆែកក្បាលលេខទូរស័ព្ទ</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      color: #172033;
+      background: #f5f7fb;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: khmer OS System, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 32px 16px;
+      background:
+        radial-gradient(ellipse at 10% 10%, #e2eaff 0, transparent 38%),
+        radial-gradient(ellipse at 90% 90%, #e5f7f1 0, transparent 35%),
+        #f5f7fb;
+    }
+
+    .card {
+      width: min(100%, 520px);
+      padding: clamp(24px, 6vw, 40px);
+      border: 1px solid #e8ebf2;
+      border-radius: 24px;
+      background: rgb(255 255 255 / 94%);
+      box-shadow: 0 24px 70px rgb(34 50 84 / 11%);
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: #5269ce;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.55rem, 5vw, 2rem);
+      line-height: 1.35;
+    }
+
+    .intro {
+      margin: 12px 0 28px;
+      color: #667085;
+      line-height: 1.75;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 9px;
+      font-size: 0.94rem;
+      font-weight: 700;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    input {
+      width: 100%;
+      min-width: 0;
+      padding: 14px 16px;
+      border: 1px solid #d9deea;
+      border-radius: 12px;
+      outline: none;
+      background: #fff;
+      color: inherit;
+      font: inherit;
+      font-size: 1.05rem;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    input:focus {
+      border-color: #5269ce;
+      box-shadow: 0 0 0 4px rgb(82 105 206 / 13%);
+    }
+
+    button {
+      flex: 0 0 auto;
+      padding: 0 20px;
+      border: 0;
+      border-radius: 12px;
+      background: #5269ce;
+      color: #fff;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 150ms ease, transform 150ms ease;
+    }
+
+    button:hover {
+      background: #4056b7;
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    button:focus-visible {
+      outline: 3px solid #aebafa;
+      outline-offset: 3px;
+    }
+
+    .hint {
+      margin: 9px 0 0;
+      color: #7a8497;
+      font-size: 0.86rem;
+    }
+
+    .result {
+      min-height: 76px;
+      margin-top: 24px;
+      padding: 17px 18px;
+      border: 1px solid #e8ebf2;
+      border-radius: 14px;
+      background: #f8f9fc;
+    }
+
+    .result[data-state="found"] {
+      border-color: #b7e5d2;
+      background: #effaf5;
+    }
+
+    .result[data-state="unknown"],
+    .result[data-state="error"] {
+      border-color: #f1d2b2;
+      background: #fff8f1;
+    }
+
+    .result-title {
+      margin: 0;
+      color: #667085;
+      font-size: 0.88rem;
+    }
+
+    .result-value {
+      margin: 5px 0 0;
+      font-size: 1.14rem;
+      font-weight: 750;
+      line-height: 1.5;
+    }
+
+    .note {
+      margin: 20px 0 0;
+      color: #7a8497;
+      font-size: 0.8rem;
+      line-height: 1.65;
+    }
+
+    @media (max-width: 420px) {
+      .input-row {
+        flex-direction: column;
+      }
+
+      button {
+        min-height: 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <p class="eyebrow">PHONE PREFIX LOOKUP</p>
+    <h1>ឆែកក្បាលលេខទូរស័ព្ទ</h1>
+    <p class="intro">បញ្ចូលក្បាលលេខ ៣ ខ្ទង់ ឬលេខទូរស័ព្ទ ដើម្បីមើលថាលេខនោះស្ថិតក្នុងបញ្ជីប្រព័ន្ធអ្វី។</p>
+
+    <form id="lookup-form">
+      <label for="phone-number">ក្បាលលេខ ឬលេខទូរស័ព្ទ</label>
+      <div class="input-row">
+        <input
+          id="phone-number"
+          name="phone-number"
+          type="tel"
+          inputmode="numeric"
+          autocomplete="tel"
+          maxlength="16"
+          placeholder="ឧ. 011 ឬ 011 234 567"
+          aria-describedby="input-hint"
+          required
+        >
+        <button type="submit">ឆែកលេខ</button>
+      </div>
+      <p class="hint" id="input-hint">អាចបញ្ចូលលេខ ៣ ខ្ទង់ដំបូង ឬលេខទូរស័ព្ទពេញ។</p>
+    </form>
+
+    <section class="result" id="result" data-state="idle" aria-live="polite" aria-atomic="true">
+      <p class="result-title">លទ្ធផល</p>
+      <p class="result-value" id="result-value">សូមបញ្ចូលលេខ ដើម្បីចាប់ផ្ដើមឆែក។</p>
+    </section>
+
+    <p class="note">លទ្ធផលផ្អែកលើបញ្ជី prefix ដែលបានកំណត់ក្នុងកូដប៉ុណ្ណោះ។ ការផ្ទេរបណ្ដាញអាចធ្វើឱ្យក្រុមហ៊ុនដែលកំពុងប្រើខុសពីក្បាលលេខដើម។</p>
+  </main>
+
+  <script id="prefix-data" type="application/json">
+    {
+      "Cellcard": ["011", "012", "014", "017", "061", "076", "077", "078", "085", "089", "092", "095", "099"],
+      "Smart": ["010", "015", "016", "069", "070", "081", "086", "087", "093", "096", "098"],
+      "Metfone": ["031", "060", "066", "067", "068", "071", "088", "090", "097"],
+      "CooTel": ["038"],
+      "seatel": ["018"]
+    }
+  </script>
+  <script>
+    const form = document.querySelector("#lookup-form");
+    const input = document.querySelector("#phone-number");
+    const result = document.querySelector("#result");
+    const resultValue = document.querySelector("#result-value");
+    const prefixData = JSON.parse(document.querySelector("#prefix-data").textContent);
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const enteredValue = input.value.trim();
+      const digits = enteredValue.replace(/[\s-]/g, "");
+
+      if (!/^\d+$/.test(digits) || (digits.length !== 3 && digits.length !== 9 && digits.length !== 10)) {
+        showResult("error", "សូមបញ្ចូលក្បាលលេខ ៣ ខ្ទង់ ឬលេខទូរស័ព្ទ ៩–១០ ខ្ទង់។");
+        return;
+      }
+
+      const prefix = digits.slice(0, 3);
+      const providers = Object.entries(prefixData)
+        .filter(([, prefixes]) => Array.isArray(prefixes) && prefixes.includes(prefix))
+        .map(([provider]) => provider);
+
+      if (providers.length === 1) {
+        showResult("found", `ក្បាលលេខ ${prefix} ស្ថិតក្នុងបញ្ជី ${providers[0]}`);
+      } else if (providers.length > 1) {
+        showResult("unknown", `ក្បាលលេខ ${prefix} មានក្នុងបញ្ជីច្រើន៖ ${providers.join(" និង ")}`);
+      } else {
+        showResult("unknown", `មិនទាន់មានក្បាលលេខ ${prefix} ក្នុងបញ្ជីទេ។`);
+      }
+    });
+
+    function showResult(state, message) {
+      result.dataset.state = state;
+      resultValue.textContent = message;
+    }
+  </script>
+</body>
+</html>
